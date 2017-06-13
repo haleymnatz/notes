@@ -22,7 +22,7 @@ RSpec.describe NotesController, type: :controller do
       post :create, params: { note: { title: 'Second', content: 'BOO!' } }
     end
 
-    it 'should return 200 startus-code' do
+    it 'should return 200 status-code' do
       expect(response).to be_success
     end
 
