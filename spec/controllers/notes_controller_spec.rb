@@ -15,6 +15,14 @@ RSpec.describe NotesController, type: :controller do
       json = JSON.parse(response.body)
       expect(json[0]['id']<json[1]['id']).to be true
     end
+
+    it 'should include associated tags in the response' do
+      note = FactoryGirl.create(:note)
+      tag = FactoryGirl.create(:tag, note_id: note.id)
+      get :index
+      json = JSON.parse(response.body)
+      expect(json[0]['tags'][0]['name']).to eq(tag.name)
+    end
   end
 
   describe 'notes#create action' do
@@ -56,11 +64,21 @@ RSpec.describe NotesController, type: :controller do
   end
 
   describe "notes#show action" do
+    before do
+      @note = FactoryGirl.create(:note)
+    end
+
     it "should return a note" do
-      note = FactoryGirl.create(:note)
-      get :show, params: { id: note.id }
+      get :show, params: { id: @note.id }
       json = JSON.parse(response.body)
-      expect(json['id']).to eq(note.id)
+      expect(json['id']).to eq(@note.id)
+    end
+
+    it 'should include associated tags in response' do
+      tag = FactoryGirl.create(:tag, note_id: @note.id)
+      get :show, params: { id: @note.id }
+      json = JSON.parse(response.body)
+      expect(json['tags'][0]['name']).to eq(tag.name)
     end
   end
 
