@@ -21,7 +21,7 @@ RSpec.describe TagsController, type: :controller do
       note = FactoryGirl.create(:note)
       post :create, params: { tag: { name: '' }, note_id: note.id }
     end
-    
+
     it 'should properly deal with validation error' do
       expect(response).to have_http_status(:unprocessable_entity)
     end
@@ -29,6 +29,23 @@ RSpec.describe TagsController, type: :controller do
     it 'should return error json on validation error' do
       json = JSON.parse(response.body)
       expect(json['errors']['name'][0]).to eq('can\'t be blank')
+    end
+  end
+
+  describe 'tags#destroy action' do
+    before do
+      note = FactoryGirl.create(:note)
+      @tag = FactoryGirl.create(:tag, note_id: note.id)
+      delete :destroy, params: { id: @tag.id }
+    end
+
+    it 'should return 200 status-code' do
+      expect(response).to be_success
+    end
+
+    it 'should remove the tag from the database' do
+      deleted_tag = Tag.find_by_id(@tag.id)
+      expect(deleted_tag).to eq nil
     end
   end
 end
