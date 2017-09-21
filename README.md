@@ -1,24 +1,22 @@
-# README
+# Note API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A TDD-designed note API that allows users to create notes with tags.
 
-Things you may want to cover:
+_For back-end use only - use with external front-end program._ See [haleymnatz/note-app](https://github.com/haleymnatz/note-app).
 
-* Ruby version
+## Built With
 
-* System dependencies
+* PostgreSQL
+* Rack CORS
+* Rspec
+* factory_girl
 
-* Configuration
+## Features
 
-* Database creation
+* Dynamic page updating using AJAX
+* Rack CORS allows information transfer to external front-end program
+* Adequate test coverage and automated testing with Rspec
 
-* Database initialization
+## Versioning
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Rails 5.0.0
